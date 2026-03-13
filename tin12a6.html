@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>12A6 Thân Yêu - Trường THPT Krông Bông</title>
+    <style>
+        /* Thiết lập chung - Tông màu sáng */
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            scroll-behavior: smooth;
+            background-color: #ffffff; 
+            color: #444;
+            overflow-x: hidden;
+        }
+
+        /* Hiệu ứng lá rơi lãng mạn */
+        .leaf-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        /* Menu điều hướng đẹp mắt */
+        nav {
+            background-color: rgba(255, 255, 255, 0.95);
+            padding: 18px 0;
+            position: sticky;
+            top: 0;
+            text-align: center;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+            z-index: 1000;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #d63384; /* Màu hồng đậm tình cảm */
+            font-weight: 600;
+            margin: 0 25px;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        nav a:hover {
+            color: #ff85a2;
+            transform: translateY(-2px);
+        }
+
+        /* Header - Ảnh nền tập thể lớp 12A6 */
+        header {
+            height: 100vh;
+            background: linear-gradient(rgba(255,255,255,0.2), rgba(255,255,255,0.2)), 
+                        url('z7611053045026_636c246976e291c1353cad6c49b78cae.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            text-align: center;
+        }
+
+        .hero-text {
+            background: rgba(255, 255, 255, 0.7);
+            padding: 40px 60px;
+            border-radius: 15px;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+
+        .hero-text h1 {
+            font-size: 4.5rem;
+            margin: 0;
+            color: #d63384;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+
+        .hero-text p {
+            font-size: 1.6rem;
+            font-style: italic;
+            color: #555;
+            margin-top: 10px;
+        }
+
+        /* Nội dung gửi gắm tình thương */
+        .content-section {
+            max-width: 1100px;
+            margin: 80px auto;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .message-box {
+            background: #fffafa;
+            padding: 50px;
+            border-radius: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.03);
+            line-height: 2;
+            font-size: 1.3rem;
+            border-top: 6px solid #ff85a2;
+            position: relative;
+        }
+
+        .message-box::before {
+            content: '“';
+            font-size: 5rem;
+            color: #ff85a2;
+            position: absolute;
+            top: 10px;
+            left: 20px;
+            opacity: 0.3;
+        }
+
+        /* Album ảnh kỷ niệm lớp */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
+            padding: 40px 20px;
+        }
+
+        .gallery-item {
+            overflow: hidden;
+            border-radius: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            background: #fff;
+            transition: all 0.3s ease;
+            position: relative; /* Thêm để đặt chữ lên ảnh */
+        }
+
+        .gallery img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+
+        /* Chú thích trên ảnh */
+        .photo-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(214, 51, 132, 0.8);
+            color: white;
+            padding: 10px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transform: translateY(100%);
+            transition: 0.3s ease;
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(214, 51, 132, 0.2);
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+
+        .gallery-item:hover .photo-caption {
+            transform: translateY(0);
+        }
+
+        /* Cuối trang - Footer */
+        footer {
+            background-color: #f8f9fa;
+            color: #666;
+            padding: 60px 20px;
+            text-align: center;
+            border-top: 1px solid #eee;
+        }
+
+        .footer-info {
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        .footer-info strong {
+            color: #d63384;
+        }
+
+        /* Animation lá rơi */
+        @keyframes fall {
+            0% { transform: translateY(-10%) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.8; }
+            100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+        }
+
+        .leaf {
+            position: absolute;
+            width: 18px;
+            height: 18px;
+            background-color: #ffb7c5;
+            border-radius: 0 100%;
+            animation: fall 10s linear infinite;
+            filter: blur(1px);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="leaf-container" id="leafContainer"></div>
+
+    <nav>
+        <a href="#home">Trang Chủ</a>
+        <a href="#loinhannhu">Nơi Gửi Gắm Tình Yêu Thương</a>
+    </nav>
+
+    <header id="home">
+        <div class="hero-text">
+            <h1>12A6 Thân Yêu</h1>
+            <p>Thanh xuân rực rỡ nhất là khi có các bạn...</p>
+        </div>
+    </header>
+
+    <section class="content-section" id="loinhannhu">
+        <h2 style="color: #d63384; font-size: 2.5rem; margin-bottom: 40px;">Gửi Gắm Yêu Thương</h2>
+        <div class="message-box">
+            <p>Gửi tập thể 12A6 thân yêu của tôi!</p>
+            <p>Dưới mái trường Krông Bông đầy nắng và gió, chúng ta đã cùng nhau viết nên những trang nhật ký đẹp nhất của tuổi trẻ. Cảm ơn vì những nụ cười rạng rỡ, cảm ơn cả những lúc giận hờn để chúng ta thêm thấu hiểu nhau hơn. </p>
+            <p>Chúc cho mỗi thành viên của lớp mình luôn giữ vững ngọn lửa đam mê, bình tĩnh, tự tin để chinh phục kỳ thi sắp tới. Dù sau này mỗi đứa một phương trời, nhưng trái tim vẫn luôn hướng về mái nhà chung 12A6 rộn rã tiếng cười này nhé!</p>
+            <p style="font-weight: bold; color: #d63384;">Yêu và nhớ 12A6 rất nhiều!</p>
+        </div>
+
+        <div class="gallery">
+            <div class="gallery-item">
+                <img src="z7611050322262_505ce7e3adb36af7104fad73ea51d4bc.jpg" alt="Ảnh 8/3 lớp">
+                <div class="photo-caption">Ngày 8-3</div>
+            </div>
+            <div class="gallery-item">
+                <img src="z7611050333469_8e53183546c263b8395ae0b09df63bb6.jpg" alt="Kỷ niệm 12A6">
+                <div class="photo-caption">Ngày 8-3</div>
+            </div>
+            <div class="gallery-item">
+                <img src="z7611052999819_62aaef6d86418fa4d86a9d787244a422.jpg" alt="Giờ học vui vẻ">
+                <div class="photo-caption">Ngày 20-10</div>
+            </div>
+            <div class="gallery-item">
+                <img src="z7611053750681_9724d6f38aebbc7bfd6bfaeb287409f2.jpg" alt="Tập thể lớp">
+                <div class="photo-caption">Ngày 20-11</div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-info">
+            <p><strong>Địa chỉ:</strong> Trường THPT Krông Bông, lớp 12A6</p>
+            <p><strong>Số điện thoại:</strong> 0858130599</p>
+            <p style="margin-top: 30px; font-size: 0.9rem; opacity: 0.6;">© 2026 - nhóm7</p>
+        </div>
+    </footer>
+
+    <script>
+        // Tạo lá rơi tự động với độ ngẫu nhiên cao hơn
+        const container = document.getElementById('leafContainer');
+        function createLeaf() {
+            const leaf = document.createElement('div');
+            leaf.classList.add('leaf');
+            leaf.style.left = Math.random() * 100 + 'vw';
+            leaf.style.animationDuration = Math.random() * 5 + 7 + 's';
+            leaf.style.opacity = Math.random() * 0.6 + 0.4;
+            leaf.style.width = Math.random() * 10 + 10 + 'px';
+            leaf.style.height = leaf.style.width;
+            container.appendChild(leaf);
+            
+            setTimeout(() => { leaf.remove(); }, 12000);
+        }
+        setInterval(createLeaf, 400);
+    </script>
+</body>
+</html>
